@@ -7,27 +7,21 @@ using System.Threading.Tasks;
 namespace MoiraSoft.Controllers
 {
     /// <summary>
-    /// Controlador encargada del Login de Usuarios
+    /// Controlador encargada de los turnos de los trabajadores
     /// </summary>
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    public class LoginController : ControllerBase
+    public class TurnoController : ControllerBase
     {
         [HttpGet]
-        [Route("ingreso/{user}/{pass}")]
-        public async Task<IActionResult> GetLogin(string user, string pass)
+        [Route("TipoTurno/")]
+        public async Task<IActionResult> ObtenerTipoTurno()
         {
             try
             {
-                if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass))
-                {
-                    return BadRequest("Solicitud Inválida");
-                }
-
                 await Task.Delay(10);
-
                 return Ok();
             }
             catch (Exception ex)
@@ -36,19 +30,18 @@ namespace MoiraSoft.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("crear/")]
-        public async Task<IActionResult> CreateLogin(Login login)
+        [HttpGet]
+        [Route("/crear")]
+        public async Task<IActionResult> CrearTurno(TurnoDto turno)
         {
             try
             {
-                if (login == null)
+                if (turno == null)
                 {
                     return BadRequest("Solicitud Inválida");
                 }
 
                 await Task.Delay(10);
-
                 return Ok();
             }
             catch (Exception ex)
@@ -56,5 +49,6 @@ namespace MoiraSoft.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
             }
         }
+
     }
 }
