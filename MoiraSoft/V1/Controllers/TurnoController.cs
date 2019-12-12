@@ -4,7 +4,7 @@ using MoiraSoftNegocio.DataTransferObject;
 using System;
 using System.Threading.Tasks;
 
-namespace MoiraSoft.Controllers
+namespace MoiraSoft.V1.Controllers
 {
     /// <summary>
     /// Controlador encargada de los turnos de los trabajadores

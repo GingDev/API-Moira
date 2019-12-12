@@ -4,7 +4,7 @@ using MoiraSoftNegocio.DataTransferObject;
 using System;
 using System.Threading.Tasks;
 
-namespace MoiraSoft.Controllers
+namespace MoiraSoft.V1.Controllers
 {
     /// <summary>
     /// Controlador encargada del Los datos de las Personas del Sistema
