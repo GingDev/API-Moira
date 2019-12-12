@@ -31,7 +31,7 @@ namespace MoiraSoft.Controllers
         }
 
         [HttpGet]
-        [Route("/crear")]
+        [Route("crear/")]
         public async Task<IActionResult> CrearTurno(TurnoDto turno)
         {
             try

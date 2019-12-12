@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MoiraSoft.Controllers
 {
     /// <summary>
-    /// Controlador encargada del Los datos de las Personas del Sistem
+    /// Controlador encargada del Los datos de las Personas del Sistema
     /// </summary>
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -21,6 +21,28 @@ namespace MoiraSoft.Controllers
         {
             try
             {
+                await Task.Delay(10);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
+            }
+        }
+
+        #region [Persona]
+
+        [HttpGet]
+        [Route("obtener/")]
+        public async Task<IActionResult> ObtenerPersona(int loginId)
+        {
+            try
+            {
+                if (loginId == 0)
+                {
+                    return BadRequest("Solicitud Inválida");
+                }
+
                 await Task.Delay(10);
                 return Ok();
             }
@@ -48,6 +70,61 @@ namespace MoiraSoft.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
             }
         }
+
+        [HttpPut]
+        [Route("modifica/")]
+        public async Task<IActionResult> ModificarPersona(PersonaDto persona)
+        {
+            try
+            {
+                await Task.Delay(10);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
+            }
+        }
+
+        [HttpDelete]
+        [Route("elimina/")]
+        public async Task<IActionResult> EliminarPersona(PersonaDto persona)
+        {
+            try
+            {
+                await Task.Delay(10);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
+            }
+        }
+
+        #endregion
+
+        #region [Datos de Contacto]
+
+        [HttpGet]
+        [Route("obtener/datosContacto/{personaId}")]
+        public async Task<IActionResult> ObtenerDatosContacto(int personaId)
+        {
+            try
+            {
+                if (personaId == 0)
+                {
+                    return BadRequest("");
+                }
+
+                await Task.Delay(10);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
+            }
+        }
+
         [HttpPost]
         [Route("ingresa/datosContacto/")]
         public async Task<IActionResult> IngresaDatosContacto(PersonaContactoDto datos)
@@ -67,8 +144,41 @@ namespace MoiraSoft.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("modifica/datosContacto/")]
+        public async Task<IActionResult> ModificarDatosContacto(PersonaContactoDto datos)
+        {
+            try
+            {
+                await Task.Delay(10);
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
+            }
+        }
+
+        [HttpDelete]
+        [Route("elimina/datosContacto/")]
+        public async Task<IActionResult> EliminarDatosContacto(PersonaContactoDto datos)
+        {
+            try
+            {
+                await Task.Delay(10);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
+            }
+        }
+
+        #endregion
+
         [HttpGet]
-        [Route("/persona/cargo")]
+        [Route("persona/cargo/{rut}")]
         public async Task<IActionResult> ObtenerPersonaCargo(int rut)
         {
             try
@@ -100,5 +210,6 @@ namespace MoiraSoft.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
             }
         }
+
     }
 }
