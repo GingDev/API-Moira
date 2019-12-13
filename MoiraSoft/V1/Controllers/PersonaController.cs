@@ -106,7 +106,7 @@ namespace MoiraSoft.V1.Controllers
         #region [Datos de Contacto]
 
         [HttpGet]
-        [Route("obtener/datosContacto/{personaId}")]
+        [Route("datosContacto/obtener/{personaId}")]
         public async Task<IActionResult> ObtenerDatosContacto(int personaId)
         {
             try
@@ -178,7 +178,7 @@ namespace MoiraSoft.V1.Controllers
         #endregion
 
         [HttpGet]
-        [Route("persona/cargo/{rut}")]
+        [Route("personaCargo/{rut}")]
         public async Task<IActionResult> ObtenerPersonaCargo(int rut)
         {
             try
