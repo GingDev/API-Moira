@@ -12,6 +12,7 @@ namespace MoiraSoftNegocio.BusinessImplementation
     public class LoginImplSvc : ILoginSvc
     {
         private readonly ILoginRepository _loginRepository;
+        private static string conStr = ConnectionServicesOption.GetConnectionString();
 
         public LoginImplSvc(ILoginRepository iLoginRepository)
         {
@@ -25,7 +26,7 @@ namespace MoiraSoftNegocio.BusinessImplementation
             {
                 await Task.Delay(10);
 
-                var datos = _loginRepository.GetLogin(user, pass);
+                var datos = _loginRepository.GetLogin(user, pass, conStr);
 
                 if (datos.Result != null)
                 {
@@ -47,7 +48,7 @@ namespace MoiraSoftNegocio.BusinessImplementation
             {
                 await Task.Delay(10);
 
-                var resultado = _loginRepository.CreateLogin(LoginMapper.LoginToEntity(login));
+                var resultado = _loginRepository.CreateLogin(LoginMapper.LoginToEntity(login), conStr);
 
                 if (resultado.Result != null)
                 {

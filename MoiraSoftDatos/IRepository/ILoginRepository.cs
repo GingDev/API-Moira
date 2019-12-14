@@ -5,7 +5,7 @@ namespace MoiraSoftDatos.IRepository
 {
     public interface ILoginRepository
     {
-        Task<LoginEntity> GetLogin(string user, string pass);
-        Task<LoginEntity> CreateLogin(LoginEntity login);
+        Task<LoginEntity> GetLogin(string user, string pass, string connection);
+        Task<LoginEntity> CreateLogin(LoginEntity login, string connection);
     }
 }

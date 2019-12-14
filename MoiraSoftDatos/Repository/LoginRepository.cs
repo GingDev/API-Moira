@@ -7,9 +7,7 @@ namespace MoiraSoftDatos.Repository
 {
     public class LoginRepository : ILoginRepository
     {
-        //  private static string conStr = ConnectionServicesOption.GetConnectionString();
-
-        public async Task<LoginEntity> GetLogin(string user, string pass)
+        public async Task<LoginEntity> GetLogin(string user, string pass, string connection)
         {
             var login = new LoginEntity
             {
@@ -31,7 +29,7 @@ namespace MoiraSoftDatos.Repository
             }
         }
 
-        public async Task<LoginEntity> CreateLogin(LoginEntity login)
+        public async Task<LoginEntity> CreateLogin(LoginEntity login, string connection)
         {
             await Task.Delay(10);
             Random random = new Random();

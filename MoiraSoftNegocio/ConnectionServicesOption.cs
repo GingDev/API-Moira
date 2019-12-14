@@ -1,5 +1,11 @@
-﻿namespace MoiraSoftNegocio
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+
+namespace MoiraSoftNegocio
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ConnectionServicesOption
     {
         /// <summary>
@@ -8,8 +14,8 @@
         /// <returns></returns>
         public static string GetConnectionString()
         {
-            return string.Empty;
-            //return DependencyResolver.ServiceProvider.GetService<IOptions<ConnectionStringOption>>().Value.ConnectionString;
+            //return string.Empty;
+            return DependencyResolver.ServiceProvider.GetService<IOptions<ConnectionStringOption>>().Value.ConnectionString;
         }
     }
 }

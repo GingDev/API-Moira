@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
+using MoiraSoft.ConfigServer;
 using MoiraSoftDatos.IRepository;
 using MoiraSoftDatos.Repository;
 using MoiraSoftNegocio;
@@ -87,9 +89,11 @@ namespace MoiraSoft
             services.Configure<ConnectionStringOption>(options =>
             {
                 options.ConnectionString = Configuration["ConnectionString"];
+                options.ConnectionString = DependencyResolver.ServiceProvider.GetService<IOptions<ConfigServerProvider>>().Value.ConnectionString;
+
             });
 
-            MoiraSoftNegocio.DependencyResolver.ServiceProvider = services.BuildServiceProvider();
+
             DependencyResolver.ServiceProvider = services.BuildServiceProvider();
         }
 
