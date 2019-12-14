@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MoiraSoftNegocio.BusinessInterfaces;
 using MoiraSoftNegocio.DataTransferObject;
 using System;
 using System.Threading.Tasks;
@@ -15,6 +16,13 @@ namespace MoiraSoft.V1.Controllers
     [Produces("application/json")]
     public class LoginController : ControllerBase
     {
+        private readonly ILoginSvc _login;
+
+        public LoginController(ILoginSvc iLoginSvc)
+        {
+            _login = iLoginSvc;
+        }
+
         [HttpGet]
         [Route("ingreso/{user}/{pass}")]
         public async Task<IActionResult> GetLogin(string user, string pass)
@@ -26,9 +34,9 @@ namespace MoiraSoft.V1.Controllers
                     return BadRequest("Solicitud Inválida");
                 }
 
-                await Task.Delay(10);
+                var result = await _login.GetLogin(user, pass);
 
-                return Ok();
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -47,9 +55,9 @@ namespace MoiraSoft.V1.Controllers
                     return BadRequest("Solicitud Inválida");
                 }
 
-                await Task.Delay(10);
+                var result = await _login.CreateLogin(login);
 
-                return Ok();
+                return Ok(result);
             }
             catch (Exception ex)
             {

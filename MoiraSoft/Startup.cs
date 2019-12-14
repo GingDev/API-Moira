@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
+using MoiraSoftDatos.IRepository;
+using MoiraSoftDatos.Repository;
+using MoiraSoftNegocio;
+using MoiraSoftNegocio.BusinessImplementation;
+using MoiraSoftNegocio.BusinessInterfaces;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
+using System.Reflection;
 
 namespace MoiraSoft
 {
@@ -40,9 +39,9 @@ namespace MoiraSoft
                     options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                 });
             //services.AddHealthChecksUI();
-            //DependencyInjection(services);
+            DependencyInjection(services);
             AddSwaggerExplorer(services);
-            //ConfigurationApp(services);
+            ConfigurationApp(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +80,23 @@ namespace MoiraSoft
 
             // Se registra ante Eureka Service Discovery
             // app.UseDiscoveryClient();
+        }
+
+        public void ConfigurationApp(IServiceCollection services)
+        {
+            services.Configure<ConnectionStringOption>(options =>
+            {
+                options.ConnectionString = Configuration["ConnectionString"];
+            });
+
+            MoiraSoftNegocio.DependencyResolver.ServiceProvider = services.BuildServiceProvider();
+            DependencyResolver.ServiceProvider = services.BuildServiceProvider();
+        }
+
+        public void DependencyInjection(IServiceCollection services)
+        {
+            services.AddSingleton<ILoginSvc, LoginImplSvc>();
+            services.AddSingleton<ILoginRepository, LoginRepository>();
         }
 
         #region [Methods Swagger]
