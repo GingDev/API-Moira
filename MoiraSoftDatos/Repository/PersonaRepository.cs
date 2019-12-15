@@ -156,6 +156,42 @@ namespace MoiraSoftDatos.Repository
             return collDatos;
         }
 
+        public async Task<InfoPersonaLoginEntity> GetInfoPersonaLogin(int loginId, string connection)
+        {
+            InfoPersonaLoginEntity datos = new InfoPersonaLoginEntity();
+
+            using (MySqlConnection con = new MySqlConnection(connection))
+            {
+                using (var cmd = con.CreateCommand())
+                {
+                    cmd.CommandText = $"Select INT_PK_PERSONA_ID, VC_NOMBRES,VC_APELLIDO_PATERNO,VC_CORREO,VC_PREFIJO,INT_NUMERO_CONTACTO,BI_TELEFONO_CELULAR,VC_DIRECCION FROM bd_moira.persona p inner join bd_moira.persona_datos_contacto pdt on p.INT_PK_PERSONA_ID = pdt.INT_FK_PERSONA_ID where p.INT_FK_LOGIN_ID = {loginId};";
+                    cmd.CommandType = CommandType.Text;
+
+                    await con.OpenAsync();
+
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            datos = new InfoPersonaLoginEntity
+                            {
+                                PersonaId = Convert.ToInt32(reader["INT_PK_PERSONA_ID"].ToString()),
+                                Apellido = reader["VC_APELLIDO_PATERNO"].ToString(),
+                                Nombres = reader["VC_NOMBRES"].ToString(),
+                                Correo = reader["VC_CORREO"].ToString(),
+                                Direccion = reader["VC_DIRECCION"].ToString(),
+                                Prefijo = reader["VC_PREFIJO"].ToString(),
+                                Telefono = Convert.ToInt32(reader["INT_NUMERO_CONTACTO"].ToString()),
+                                EsCelular = reader["BI_TELEFONO_CELULAR"].ToString() == "1" ? true : false
+                            };
+                        }
+                    }
+                }
+            }
+
+            return datos;
+        }
+
         public async Task<List<TrabajadorEntity>> GetTrabajadores(string connection)
         {
             List<TrabajadorEntity> collDatos = new List<TrabajadorEntity>();

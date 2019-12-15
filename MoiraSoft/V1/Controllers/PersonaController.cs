@@ -263,5 +263,20 @@ namespace MoiraSoft.V1.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("InfoPersonaLogin/obtener/{loginId}")]
+        public async Task<IActionResult> ObtenerInfoPersonaLogin(int loginId)
+        {
+            try
+            {
+                var result = await _persona.GetInfoPersonaLogin(loginId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
+            }
+        }
+
     }
 }

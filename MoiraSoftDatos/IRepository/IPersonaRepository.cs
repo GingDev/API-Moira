@@ -11,5 +11,6 @@ namespace MoiraSoftDatos.IRepository
         Task<List<PersonaInfoEntity>> GetInfoPersonaTurno(string connection);
         Task<List<RegistroAnormalEntity>> GetInfoRegistroAnormal(string connection);
         Task<List<TrabajadorEntity>> GetTrabajadores(string connection);
+        Task<InfoPersonaLoginEntity> GetInfoPersonaLogin(int loginId, string connection);
     }
 }

@@ -117,5 +117,26 @@ namespace MoiraSoftNegocio.BusinessImplementation
             }
             return MensajeRespuesta.CrearMensajeRespuestaList(collRegistros, string.Empty, true);
         }
+
+        public async Task<RespuestaDto<InfoPersonaLoginDto>> GetInfoPersonaLogin(int loginId)
+        {
+            InfoPersonaLoginDto DatosPersona = new InfoPersonaLoginDto();
+
+            try
+            {
+                var datos = await _personaRepository.GetInfoPersonaLogin(loginId, conStr);
+
+                if (datos != null)
+                {
+                    DatosPersona = PersonaMapper.InfoPersonaLoginToDto(datos);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
+
+            return MensajeRespuesta.CrearMensajeRespuesta(DatosPersona, string.Empty, true);
+        }
     }
 }

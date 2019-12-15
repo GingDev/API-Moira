@@ -100,5 +100,20 @@ namespace MoiraSoftNegocio.BusinessMapper
         {
             return collEntities.Select(c => TrabajadorToEntity(c)).ToList();
         }
+
+        public static InfoPersonaLoginDto InfoPersonaLoginToDto(InfoPersonaLoginEntity entity)
+        {
+            return new InfoPersonaLoginDto
+            {
+                Apellido = entity.Apellido,
+                Correo = entity.Correo,
+                Direccion = entity.Direccion,
+                EsCelular = entity.EsCelular,
+                Nombres = entity.Nombres,
+                PersonaId = entity.PersonaId,
+                Prefijo = entity.Prefijo,
+                Telefono = entity.Telefono
+            };
+        }
     }
 }
