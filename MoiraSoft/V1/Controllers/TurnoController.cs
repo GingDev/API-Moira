@@ -72,5 +72,35 @@ namespace MoiraSoft.V1.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("InfoVacaciones/obtener")]
+        public async Task<IActionResult> ObtenerInfoVacaciones()
+        {
+            try
+            {
+                var result = await _turno.GetInfoVacaciones();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
+            }
+        }
+
+        [HttpGet]
+        [Route("InfoLicencia/obtener")]
+        public async Task<IActionResult> ObtenerInfoLicencia()
+        {
+            try
+            {
+                var result = await _turno.GetInfoLicencias();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
+            }
+        }
+
     }
 }

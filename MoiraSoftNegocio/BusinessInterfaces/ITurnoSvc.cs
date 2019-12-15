@@ -8,5 +8,7 @@ namespace MoiraSoftNegocio.BusinessInterfaces
     {
         Task<ListRespuestaDto<InfoTurnoDto>> GetInfoTurno();
         Task<RespuestaDto<TurnoDto>> CrearTurno(TurnoDto turno);
+        Task<ListRespuestaDto<InfoTurnoDto>> GetInfoVacaciones();
+        Task<ListRespuestaDto<InfoTurnoDto>> GetInfoLicencias();
     }
 }

@@ -59,5 +59,44 @@ namespace MoiraSoftNegocio.BusinessImplementation
             return MensajeRespuesta.CrearMensajeRespuesta(datosTurno, string.Empty, true);
 
         }
+
+        public async Task<ListRespuestaDto<InfoTurnoDto>> GetInfoVacaciones()
+        {
+            List<InfoTurnoDto> collRegistros = new List<InfoTurnoDto>();
+            try
+            {
+                var datos = await _turnoRepository.GetInfoVacaciones(conStr);
+
+                if (datos.Count > 0)
+                {
+                    collRegistros = TurnoMapper.InfoTurnoToDto(datos);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
+            return MensajeRespuesta.CrearMensajeRespuestaList(collRegistros, string.Empty, true);
+        }
+
+        public async Task<ListRespuestaDto<InfoTurnoDto>> GetInfoLicencias()
+        {
+            List<InfoTurnoDto> collRegistros = new List<InfoTurnoDto>();
+            try
+            {
+                var datos = await _turnoRepository.GetInfoLicencia(conStr);
+
+                if (datos.Count > 0)
+                {
+                    collRegistros = TurnoMapper.InfoTurnoToDto(datos);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
+            return MensajeRespuesta.CrearMensajeRespuestaList(collRegistros, string.Empty, true);
+        }
+
     }
 }
