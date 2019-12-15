@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MoiraSoftNegocio.BusinessInterfaces;
 using MoiraSoftNegocio.DataTransferObject;
 using System;
 using System.Threading.Tasks;
@@ -15,6 +16,13 @@ namespace MoiraSoft.V1.Controllers
     [Produces("application/json")]
     public class PersonaController : ControllerBase
     {
+        private readonly IPersonaSvc _persona;
+
+        public PersonaController(IPersonaSvc ipersona)
+        {
+            _persona = ipersona;
+        }
+
         [HttpGet]
         [Route("perfil/")]
         public async Task<IActionResult> GetPerfil()
@@ -62,8 +70,8 @@ namespace MoiraSoft.V1.Controllers
                 {
                     return BadRequest("Solicitud Inválida");
                 }
-                await Task.Delay(10);
-                return Ok();
+                var result = await _persona.CrearPersona(persona);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -197,13 +205,13 @@ namespace MoiraSoft.V1.Controllers
         }
 
         [HttpGet]
-        [Route("/cargo")]
+        [Route("cargo/obtener")]
         public async Task<IActionResult> ObtenerCargo()
         {
             try
             {
-                await Task.Delay(10);
-                return Ok();
+                var result = await _persona.GetCargos();
+                return Ok(result);
             }
             catch (Exception ex)
             {

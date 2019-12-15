@@ -35,7 +35,7 @@ namespace MoiraSoftNegocio.BusinessImplementation
             }
             catch (Exception ex)
             {
-                return MensajeRespuesta.CrearMensajeRespuesta(login, ex.Message, false);
+                throw new Exception($"{ex.Message}");
             }
 
             return MensajeRespuesta.CrearMensajeRespuesta(login, string.Empty, true);
@@ -58,7 +58,7 @@ namespace MoiraSoftNegocio.BusinessImplementation
             }
             catch (Exception ex)
             {
-                return MensajeRespuesta.CrearMensajeRespuesta(loginResult, ex.Message, false);
+                throw new Exception($"{ex.Message}");
             }
 
             return MensajeRespuesta.CrearMensajeRespuesta(loginResult, string.Empty, true);
