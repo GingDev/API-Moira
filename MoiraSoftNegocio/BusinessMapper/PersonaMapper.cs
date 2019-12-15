@@ -69,5 +69,22 @@ namespace MoiraSoftNegocio.BusinessMapper
         {
             return collEntities.Select(c => PersonaInfoToEntity(c)).ToList();
         }
+
+        public static RegistroAnormalDto RegistroAnormalToDto(RegistroAnormalEntity entity)
+        {
+            return new RegistroAnormalDto
+            {
+                Apellido = entity.Apellido,
+                FinRegistro = entity.FinRegistro,
+                InicioRegistro = entity.InicioRegistro,
+                Nombre = entity.Nombre,
+                PersonaId = entity.PersonaId,
+                TipoRegistro = entity.TipoRegistro
+            };
+        }
+        public static List<RegistroAnormalDto> RegistroAnormalToDto(List<RegistroAnormalEntity> collEntities)
+        {
+            return collEntities.Select(c => RegistroAnormalToDto(c)).ToList();
+        }
     }
 }

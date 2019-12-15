@@ -80,5 +80,24 @@ namespace MoiraSoftNegocio.BusinessImplementation
             }
             return MensajeRespuesta.CrearMensajeRespuestaList(collPersonas, string.Empty, true);
         }
+
+        public async Task<ListRespuestaDto<RegistroAnormalDto>> GetRegistroAnormal()
+        {
+            List<RegistroAnormalDto> collRegistros = new List<RegistroAnormalDto>();
+            try
+            {
+                var datos = await _personaRepository.GetInfoRegistroAnormal(conStr);
+
+                if (datos.Count > 0)
+                {
+                    collRegistros = PersonaMapper.RegistroAnormalToDto(datos);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
+            return MensajeRespuesta.CrearMensajeRespuestaList(collRegistros, string.Empty, true);
+        }
     }
 }

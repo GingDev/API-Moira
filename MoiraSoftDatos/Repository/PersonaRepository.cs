@@ -120,6 +120,44 @@ namespace MoiraSoftDatos.Repository
 
         }
 
+        public async Task<List<RegistroAnormalEntity>> GetInfoRegistroAnormal(string connection)
+        {
+            List<RegistroAnormalEntity> collDatos = new List<RegistroAnormalEntity>();
+            RegistroAnormalEntity datos;
+
+            using (MySqlConnection con = new MySqlConnection(connection))
+            {
+                using (var cmd = con.CreateCommand())
+                {
+                    cmd.CommandText = $"select 	p.INT_PK_PERSONA_ID AS PersonaID,p.VC_NOMBRES AS Nombre,p.VC_APELLIDO_PATERNO AS Apellido,tp.VC_DESCRIPCION AS TipoRegistro,rt.DT_FECHA_INICIO_REGISTRO AS InicioTurno,rt.DT_FECHA_FIN_REGISTRO AS FinTurno from bd_moira.persona p Inner join bd_moira.persona_trabajo pt on p.INT_PK_PERSONA_ID = pt.INT_FK_INT_PERSONA_ID inner join bd_moira.registro_turno rt on rt.INT_FK_PERSONA_TRABAJO_ID = pt.INT_PK_PERSONA_TRABAJO_ID Inner join bd_moira.tipo_registro tp on tp.INT_PK_TIPO_REGISTRO_ID = rt.FK_INT_TIPO_REGISTRO Where rt.FK_INT_TIPO_REGISTRO in (2,3) order by rt.INT_PK_REGISTRO_ID desc LIMIT 3 OFFSET 0";
+                    cmd.CommandType = CommandType.Text;
+
+                    await con.OpenAsync();
+
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            datos = new RegistroAnormalEntity
+                            {
+                                PersonaId = Convert.ToInt32(reader["PersonaID"].ToString()),
+                                Apellido = reader["Apellido"].ToString(),
+                                Nombre = reader["Nombre"].ToString(),
+                                TipoRegistro = reader["TipoRegistro"].ToString(),
+                                InicioRegistro = Convert.ToDateTime(reader["InicioTurno"].ToString()),
+                                FinRegistro = Convert.ToDateTime(reader["FinTurno"].ToString())
+                            };
+
+                            collDatos.Add(datos);
+                        }
+                    }
+                }
+            }
+
+            return collDatos;
+        }
+
+
         private async Task<int> GetMaxId(string connection)
         {
             int maximoId = 0;

@@ -9,5 +9,6 @@ namespace MoiraSoftDatos.IRepository
         Task<List<CargoEntity>> GetCargos(string connection);
         Task<PersonaEntity> CrearPersona(PersonaEntity persona, string connection);
         Task<List<PersonaInfoEntity>> GetInfoPersonaTurno(string connection);
+        Task<List<RegistroAnormalEntity>> GetInfoRegistroAnormal(string connection);
     }
 }

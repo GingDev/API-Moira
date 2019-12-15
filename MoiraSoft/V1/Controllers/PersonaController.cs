@@ -74,6 +74,21 @@ namespace MoiraSoft.V1.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("obtener/infoRegistroAnormal")]
+        public async Task<IActionResult> ObtenerInfoRegistroAnormal()
+        {
+            try
+            {
+                var result = await _persona.GetRegistroAnormal();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
+            }
+        }
+
         [HttpPost]
         [Route("crear/")]
         public async Task<IActionResult> IngresaPersona(PersonaDto persona)
