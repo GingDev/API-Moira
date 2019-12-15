@@ -10,5 +10,6 @@ namespace MoiraSoftNegocio.BusinessInterfaces
         Task<RespuestaDto<PersonaDto>> CrearPersona(PersonaDto persona);
         Task<ListRespuestaDto<PersonaInfoDto>> GetInfoPersonaTurnoList();
         Task<ListRespuestaDto<RegistroAnormalDto>> GetRegistroAnormal();
+        Task<ListRespuestaDto<TrabajadorDto>> GetTrabajadores();
     }
 }

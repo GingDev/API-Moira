@@ -248,5 +248,20 @@ namespace MoiraSoft.V1.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("trabajadores/obtener")]
+        public async Task<IActionResult> ObtenerTrabajadores()
+        {
+            try
+            {
+                var result = await _persona.GetTrabajadores();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
+            }
+        }
+
     }
 }

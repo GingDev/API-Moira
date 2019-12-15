@@ -7,5 +7,6 @@ namespace MoiraSoftDatos.IRepository
     public interface ITurnoRepository
     {
         Task<List<InfoTurnoEntity>> GetInfoTurno(string connection);
+        Task<TurnoEntity> CrearTurno(TurnoEntity turno, string connection);
     }
 }
