@@ -15,7 +15,8 @@ namespace MoiraSoftNegocio.BusinessMapper
                 TurnoId = entity.TurnoId,
                 Nombre = entity.Nombre,
                 FechaInicioTurno = entity.FechaInicioTurno,
-                FechaTerminoTurno = entity.FechaTerminoTurno
+                FechaTerminoTurno = entity.FechaTerminoTurno,
+                Cargo = entity.Cargo
             };
         }
 

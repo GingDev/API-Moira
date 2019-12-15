@@ -23,7 +23,7 @@ namespace MoiraSoftDatos.Repository
             {
                 using (var cmd = con.CreateCommand())
                 {
-                    cmd.CommandText = $"select 	p.INT_PK_PERSONA_ID AS PersonaID,rt.INT_PK_REGISTRO_ID AS TurnoID,p.VC_NOMBRES AS Nombre,p.VC_APELLIDO_PATERNO AS Apellido,rt.DT_FECHA_INICIO_REGISTRO AS InicioTurno,rt.DT_FECHA_FIN_REGISTRO AS FinTurno from bd_moira.persona p Inner join bd_moira.persona_trabajo pt on p.INT_PK_PERSONA_ID = pt.INT_FK_INT_PERSONA_ID inner join bd_moira.registro_turno rt on rt.INT_FK_PERSONA_TRABAJO_ID = pt.INT_PK_PERSONA_TRABAJO_ID Inner join bd_moira.tipo_registro tp on tp.INT_PK_TIPO_REGISTRO_ID = rt.FK_INT_TIPO_REGISTRO Where rt.FK_INT_TIPO_REGISTRO in (1) and rt.DT_FECHA_INICIO_REGISTRO >= '{fechaInicio}' and rt.DT_FECHA_FIN_REGISTRO <= '{fechaFin}' order by rt.INT_PK_REGISTRO_ID desc LIMIT 10 OFFSET 0";
+                    cmd.CommandText = $"select 	p.INT_PK_PERSONA_ID AS PersonaID, rt.INT_PK_REGISTRO_ID AS TurnoID, p.VC_NOMBRES AS Nombre, p.VC_APELLIDO_PATERNO AS Apellido,c.VC_DESCRIPCION AS Cargo,rt.DT_FECHA_INICIO_REGISTRO AS InicioTurno,rt.DT_FECHA_FIN_REGISTRO AS FinTurno from bd_moira.persona p Inner join bd_moira.persona_trabajo pt on p.INT_PK_PERSONA_ID = pt.INT_FK_INT_PERSONA_ID inner join bd_moira.cargo c on c.INT_PK_CARGO_ID = pt.INT_FK_CARGO_ID inner join bd_moira.registro_turno rt on rt.INT_FK_PERSONA_TRABAJO_ID = pt.INT_PK_PERSONA_TRABAJO_ID Inner join bd_moira.tipo_registro tp on tp.INT_PK_TIPO_REGISTRO_ID = rt.FK_INT_TIPO_REGISTRO Where rt.FK_INT_TIPO_REGISTRO in (1) and rt.DT_FECHA_INICIO_REGISTRO >= '{fechaInicio}' and rt.DT_FECHA_FIN_REGISTRO <= '{fechaFin}' order by rt.INT_PK_REGISTRO_ID desc LIMIT 10 OFFSET 0";
                     cmd.CommandType = CommandType.Text;
 
                     await con.OpenAsync();
@@ -36,9 +36,10 @@ namespace MoiraSoftDatos.Repository
                             {
                                 TurnoId = Convert.ToInt32(reader["PersonaID"].ToString()),
                                 PersonaId = Convert.ToInt32(reader["TurnoID"].ToString()),
-                                Nombre = reader["Nombre"].ToString(),
+                                Nombre = reader["Nombre"].ToString() + " " + reader["Apellido"].ToString(),
                                 FechaInicioTurno = Convert.ToDateTime(reader["InicioTurno"].ToString()),
-                                FechaTerminoTurno = Convert.ToDateTime(reader["FinTurno"].ToString())
+                                FechaTerminoTurno = Convert.ToDateTime(reader["FinTurno"].ToString()),
+                                Cargo = reader["Cargo"].ToString()
                             };
 
                             collDatos.Add(datos);
@@ -62,7 +63,7 @@ namespace MoiraSoftDatos.Repository
             {
                 using (var cmd = con.CreateCommand())
                 {
-                    cmd.CommandText = $"select 	p.INT_PK_PERSONA_ID AS PersonaID,rt.INT_PK_REGISTRO_ID AS TurnoID,p.VC_NOMBRES AS Nombre,p.VC_APELLIDO_PATERNO AS Apellido,rt.DT_FECHA_INICIO_REGISTRO AS InicioTurno,rt.DT_FECHA_FIN_REGISTRO AS FinTurno from bd_moira.persona p Inner join bd_moira.persona_trabajo pt on p.INT_PK_PERSONA_ID = pt.INT_FK_INT_PERSONA_ID inner join bd_moira.registro_turno rt on rt.INT_FK_PERSONA_TRABAJO_ID = pt.INT_PK_PERSONA_TRABAJO_ID Inner join bd_moira.tipo_registro tp on tp.INT_PK_TIPO_REGISTRO_ID = rt.FK_INT_TIPO_REGISTRO Where rt.FK_INT_TIPO_REGISTRO in (3) and rt.DT_FECHA_INICIO_REGISTRO >= '{fechaInicio}' and rt.DT_FECHA_FIN_REGISTRO <= '{fechaFin}' order by rt.INT_PK_REGISTRO_ID desc LIMIT 10 OFFSET 0";
+                    cmd.CommandText = $"select 	p.INT_PK_PERSONA_ID AS PersonaID, rt.INT_PK_REGISTRO_ID AS TurnoID, p.VC_NOMBRES AS Nombre, p.VC_APELLIDO_PATERNO AS Apellido,c.VC_DESCRIPCION AS Cargo,rt.DT_FECHA_INICIO_REGISTRO AS InicioTurno,rt.DT_FECHA_FIN_REGISTRO AS FinTurno from bd_moira.persona p Inner join bd_moira.persona_trabajo pt on p.INT_PK_PERSONA_ID = pt.INT_FK_INT_PERSONA_ID inner join bd_moira.cargo c on c.INT_PK_CARGO_ID = pt.INT_FK_CARGO_ID inner join bd_moira.registro_turno rt on rt.INT_FK_PERSONA_TRABAJO_ID = pt.INT_PK_PERSONA_TRABAJO_ID Inner join bd_moira.tipo_registro tp on tp.INT_PK_TIPO_REGISTRO_ID = rt.FK_INT_TIPO_REGISTRO Where rt.FK_INT_TIPO_REGISTRO in (3) and rt.DT_FECHA_INICIO_REGISTRO >= '{fechaInicio}' and rt.DT_FECHA_FIN_REGISTRO <= '{fechaFin}' order by rt.INT_PK_REGISTRO_ID desc LIMIT 10 OFFSET 0";
                     cmd.CommandType = CommandType.Text;
 
                     await con.OpenAsync();
@@ -75,9 +76,10 @@ namespace MoiraSoftDatos.Repository
                             {
                                 TurnoId = Convert.ToInt32(reader["PersonaID"].ToString()),
                                 PersonaId = Convert.ToInt32(reader["TurnoID"].ToString()),
-                                Nombre = reader["Nombre"].ToString(),
+                                Nombre = reader["Nombre"].ToString() + " " + reader["Apellido"].ToString(),
                                 FechaInicioTurno = Convert.ToDateTime(reader["InicioTurno"].ToString()),
-                                FechaTerminoTurno = Convert.ToDateTime(reader["FinTurno"].ToString())
+                                FechaTerminoTurno = Convert.ToDateTime(reader["FinTurno"].ToString()),
+                                Cargo = reader["Cargo"].ToString()
                             };
 
                             collDatos.Add(datos);
@@ -101,7 +103,7 @@ namespace MoiraSoftDatos.Repository
             {
                 using (var cmd = con.CreateCommand())
                 {
-                    cmd.CommandText = $"select 	p.INT_PK_PERSONA_ID AS PersonaID,rt.INT_PK_REGISTRO_ID AS TurnoID,p.VC_NOMBRES AS Nombre,p.VC_APELLIDO_PATERNO AS Apellido,rt.DT_FECHA_INICIO_REGISTRO AS InicioTurno,rt.DT_FECHA_FIN_REGISTRO AS FinTurno from bd_moira.persona p Inner join bd_moira.persona_trabajo pt on p.INT_PK_PERSONA_ID = pt.INT_FK_INT_PERSONA_ID inner join bd_moira.registro_turno rt on rt.INT_FK_PERSONA_TRABAJO_ID = pt.INT_PK_PERSONA_TRABAJO_ID Inner join bd_moira.tipo_registro tp on tp.INT_PK_TIPO_REGISTRO_ID = rt.FK_INT_TIPO_REGISTRO Where rt.FK_INT_TIPO_REGISTRO in (2) and rt.DT_FECHA_INICIO_REGISTRO >= '{fechaInicio}' and rt.DT_FECHA_FIN_REGISTRO <= '{fechaFin}' order by rt.INT_PK_REGISTRO_ID desc LIMIT 10 OFFSET 0";
+                    cmd.CommandText = $"select 	p.INT_PK_PERSONA_ID AS PersonaID, rt.INT_PK_REGISTRO_ID AS TurnoID, p.VC_NOMBRES AS Nombre, p.VC_APELLIDO_PATERNO AS Apellido,c.VC_DESCRIPCION AS Cargo,rt.DT_FECHA_INICIO_REGISTRO AS InicioTurno,rt.DT_FECHA_FIN_REGISTRO AS FinTurno from bd_moira.persona p Inner join bd_moira.persona_trabajo pt on p.INT_PK_PERSONA_ID = pt.INT_FK_INT_PERSONA_ID inner join bd_moira.cargo c on c.INT_PK_CARGO_ID = pt.INT_FK_CARGO_ID inner join bd_moira.registro_turno rt on rt.INT_FK_PERSONA_TRABAJO_ID = pt.INT_PK_PERSONA_TRABAJO_ID Inner join bd_moira.tipo_registro tp on tp.INT_PK_TIPO_REGISTRO_ID = rt.FK_INT_TIPO_REGISTRO Where rt.FK_INT_TIPO_REGISTRO in (2) and rt.DT_FECHA_INICIO_REGISTRO >= '{fechaInicio}' and rt.DT_FECHA_FIN_REGISTRO <= '{fechaFin}' order by rt.INT_PK_REGISTRO_ID desc LIMIT 10 OFFSET 0";
                     cmd.CommandType = CommandType.Text;
 
                     await con.OpenAsync();
@@ -114,9 +116,10 @@ namespace MoiraSoftDatos.Repository
                             {
                                 TurnoId = Convert.ToInt32(reader["PersonaID"].ToString()),
                                 PersonaId = Convert.ToInt32(reader["TurnoID"].ToString()),
-                                Nombre = reader["Nombre"].ToString(),
+                                Nombre = reader["Nombre"].ToString() + " " + reader["Apellido"].ToString(),
                                 FechaInicioTurno = Convert.ToDateTime(reader["InicioTurno"].ToString()),
-                                FechaTerminoTurno = Convert.ToDateTime(reader["FinTurno"].ToString())
+                                FechaTerminoTurno = Convert.ToDateTime(reader["FinTurno"].ToString()),
+                                Cargo = reader["Cargo"].ToString()
                             };
 
                             collDatos.Add(datos);
