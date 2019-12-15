@@ -156,6 +156,38 @@ namespace MoiraSoftDatos.Repository
             return collDatos;
         }
 
+        public async Task<List<TrabajadorEntity>> GetTrabajadores(string connection)
+        {
+            List<TrabajadorEntity> collDatos = new List<TrabajadorEntity>();
+            TrabajadorEntity datos;
+
+            using (MySqlConnection con = new MySqlConnection(connection))
+            {
+                using (var cmd = con.CreateCommand())
+                {
+                    cmd.CommandText = $"Select INT_PK_PERSONA_ID, VC_NOMBRES,VC_APELLIDO_PATERNO FROM bd_moira.persona;";
+                    cmd.CommandType = CommandType.Text;
+
+                    await con.OpenAsync();
+
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            datos = new TrabajadorEntity
+                            {
+                                PersonaId = Convert.ToInt32(reader["INT_PK_PERSONA_ID"].ToString()),
+                                Nombre = reader["VC_NOMBRES"].ToString() + " " + reader["VC_APELLIDO_PATERNO"].ToString()
+                            };
+
+                            collDatos.Add(datos);
+                        }
+                    }
+                }
+            }
+
+            return collDatos;
+        }
 
         private async Task<int> GetMaxId(string connection)
         {
