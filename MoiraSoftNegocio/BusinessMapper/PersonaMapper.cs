@@ -49,5 +49,25 @@ namespace MoiraSoftNegocio.BusinessMapper
                 ApellidoMaterno = entity.ApellidoMaterno
             };
         }
+
+        public static PersonaInfoDto PersonaInfoToEntity(PersonaInfoEntity entity)
+        {
+            return new PersonaInfoDto
+            {
+                TurnoId = entity.TurnoId,
+                Apellido = entity.Apellido,
+                Cargo = entity.Cargo,
+                FechaFinTurno = entity.FechaFinTurno,
+                FechaInicioTurno = entity.FechaInicioTurno,
+                Nombre = entity.Nombre,
+                PersonaId = entity.PersonaId,
+                Turno = entity.Turno
+            };
+        }
+
+        public static List<PersonaInfoDto> PersonaInfoToEntity(List<PersonaInfoEntity> collEntities)
+        {
+            return collEntities.Select(c => PersonaInfoToEntity(c)).ToList();
+        }
     }
 }

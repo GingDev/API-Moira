@@ -61,5 +61,24 @@ namespace MoiraSoftNegocio.BusinessImplementation
             return MensajeRespuesta.CrearMensajeRespuesta(DatosPersona, string.Empty, true);
 
         }
+
+        public async Task<ListRespuestaDto<PersonaInfoDto>> GetInfoPersonaTurnoList()
+        {
+            List<PersonaInfoDto> collPersonas = new List<PersonaInfoDto>();
+            try
+            {
+                var datos = await _personaRepository.GetInfoPersonaTurno(conStr);
+
+                if (datos.Count > 0)
+                {
+                    collPersonas = PersonaMapper.PersonaInfoToEntity(datos);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
+            return MensajeRespuesta.CrearMensajeRespuestaList(collPersonas, string.Empty, true);
+        }
     }
 }

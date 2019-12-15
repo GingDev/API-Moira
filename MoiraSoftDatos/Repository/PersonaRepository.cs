@@ -80,6 +80,46 @@ namespace MoiraSoftDatos.Repository
             return datos;
         }
 
+        public async Task<List<PersonaInfoEntity>> GetInfoPersonaTurno(string connection)
+        {
+            List<PersonaInfoEntity> collDatos = new List<PersonaInfoEntity>();
+            PersonaInfoEntity datos;
+
+            using (MySqlConnection con = new MySqlConnection(connection))
+            {
+                using (var cmd = con.CreateCommand())
+                {
+                    cmd.CommandText = $"select p.INT_PK_PERSONA_ID AS PersonaID,p.VC_NOMBRES AS Nombre,p.VC_APELLIDO_PATERNO AS Apellido,c.VC_DESCRIPCION AS Cargo,rt.INT_PK_REGISTRO_ID AS TurnoID,t.VC_DESCRIPCION AS Turno,rt.DT_FECHA_INICIO_REGISTRO AS InicioTurno,rt.DT_FECHA_FIN_REGISTRO AS FinTurno from bd_moira.persona p Inner join bd_moira.persona_trabajo pt on p.INT_PK_PERSONA_ID = pt.INT_FK_INT_PERSONA_ID Inner join bd_moira.cargo c on c.INT_PK_CARGO_ID = pt.INT_FK_CARGO_ID inner join bd_moira.registro_turno rt on rt.INT_FK_PERSONA_TRABAJO_ID = pt.INT_PK_PERSONA_TRABAJO_ID Inner join bd_moira.turno t on t.INT_PK_TURNO_ID = rt.FK_INT_TURNO_ID order by rt.INT_PK_REGISTRO_ID desc LIMIT 10 OFFSET 0 ";
+                    cmd.CommandType = CommandType.Text;
+
+                    await con.OpenAsync();
+
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            datos = new PersonaInfoEntity
+                            {
+                                PersonaId = Convert.ToInt32(reader["PersonaID"].ToString()),
+                                TurnoId = Convert.ToInt32(reader["TurnoID"].ToString()),
+                                Apellido = reader["Apellido"].ToString(),
+                                Cargo = reader["Cargo"].ToString(),
+                                Nombre = reader["Nombre"].ToString(),
+                                Turno = reader["Turno"].ToString(),
+                                FechaFinTurno = Convert.ToDateTime(reader["FinTurno"].ToString()),
+                                FechaInicioTurno = Convert.ToDateTime(reader["InicioTurno"].ToString())
+                            };
+
+                            collDatos.Add(datos);
+                        }
+                    }
+                }
+            }
+
+            return collDatos;
+
+        }
+
         private async Task<int> GetMaxId(string connection)
         {
             int maximoId = 0;

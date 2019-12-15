@@ -59,6 +59,20 @@ namespace MoiraSoft.V1.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
             }
         }
+        [HttpGet]
+        [Route("obtener/infoPersonaTurno")]
+        public async Task<IActionResult> ObtenerInfoPersonaTurno()
+        {
+            try
+            {
+                var result = await _persona.GetInfoPersonaTurnoList();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
+            }
+        }
 
         [HttpPost]
         [Route("crear/")]

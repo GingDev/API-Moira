@@ -80,7 +80,7 @@ namespace MoiraSoftDatos.Repository
             {
                 using (var cmd = con.CreateCommand())
                 {
-                    cmd.CommandText = $"select MAX(int_pk_login_id) as Maximo from bd_moira.login";
+                    cmd.CommandText = $"select ifnull(MAX(int_pk_login_id),0) as Maximo from bd_moira.login";
                     cmd.CommandType = CommandType.Text;
 
                     await con.OpenAsync();
