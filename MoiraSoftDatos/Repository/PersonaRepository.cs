@@ -10,7 +10,6 @@ namespace MoiraSoftDatos.Repository
 {
     public class PersonaRepository : IPersonaRepository
     {
-
         public async Task<List<CargoEntity>> GetCargos(string connection)
         {
             List<CargoEntity> collDatos = new List<CargoEntity>();

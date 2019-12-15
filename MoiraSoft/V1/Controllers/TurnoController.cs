@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MoiraSoftNegocio.BusinessInterfaces;
 using MoiraSoftNegocio.DataTransferObject;
 using System;
 using System.Threading.Tasks;
@@ -15,6 +16,12 @@ namespace MoiraSoft.V1.Controllers
     [Produces("application/json")]
     public class TurnoController : ControllerBase
     {
+        private readonly ITurnoSvc _turno;
+
+        public TurnoController(ITurnoSvc iTurno)
+        {
+            _turno = iTurno;
+        }
         [HttpGet]
         [Route("TipoTurno/")]
         public async Task<IActionResult> ObtenerTipoTurno()
@@ -43,6 +50,21 @@ namespace MoiraSoft.V1.Controllers
 
                 await Task.Delay(10);
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
+            }
+        }
+
+        [HttpGet]
+        [Route("InfoTurno/obtener")]
+        public async Task<IActionResult> ObtenerInfoTurno()
+        {
+            try
+            {
+                var result = await _turno.GetInfoTurno();
+                return Ok(result);
             }
             catch (Exception ex)
             {

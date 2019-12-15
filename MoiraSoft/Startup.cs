@@ -99,6 +99,8 @@ namespace MoiraSoft
             services.AddSingleton<ILoginRepository, LoginRepository>();
             services.AddSingleton<IPersonaSvc, PersonaImplSvc>();
             services.AddSingleton<IPersonaRepository, PersonaRepository>();
+            services.AddSingleton<ITurnoSvc, TurnoImplSvc>();
+            services.AddSingleton<ITurnoRepository, TurnoRepository>();
         }
 
         #region [Methods Swagger]
