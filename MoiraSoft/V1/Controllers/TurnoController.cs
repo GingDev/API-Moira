@@ -37,7 +37,7 @@ namespace MoiraSoft.V1.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("crear/")]
         public async Task<IActionResult> CrearTurno(TurnoDto turno)
         {
@@ -48,8 +48,8 @@ namespace MoiraSoft.V1.Controllers
                     return BadRequest("Solicitud Inválida");
                 }
 
-                await Task.Delay(10);
-                return Ok();
+                var result = await _turno.CrearTurno(turno);
+                return Ok(result);
             }
             catch (Exception ex)
             {

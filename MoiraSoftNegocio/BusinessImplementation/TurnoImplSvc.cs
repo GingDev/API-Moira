@@ -37,5 +37,27 @@ namespace MoiraSoftNegocio.BusinessImplementation
             }
             return MensajeRespuesta.CrearMensajeRespuestaList(collRegistros, string.Empty, true);
         }
+
+        public async Task<RespuestaDto<TurnoDto>> CrearTurno(TurnoDto turno)
+        {
+            TurnoDto datosTurno = new TurnoDto();
+
+            try
+            {
+                var datos = await _turnoRepository.CrearTurno(TurnoMapper.TurnoToEntity(turno), conStr);
+
+                if (datos != null)
+                {
+                    datosTurno = TurnoMapper.TurnoToDto(datos);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
+
+            return MensajeRespuesta.CrearMensajeRespuesta(datosTurno, string.Empty, true);
+
+        }
     }
 }

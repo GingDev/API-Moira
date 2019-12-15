@@ -23,5 +23,33 @@ namespace MoiraSoftNegocio.BusinessMapper
         {
             return collEntity.Select(c => InfoTurnoToDto(c)).ToList();
         }
+
+        public static TurnoEntity TurnoToEntity(TurnoDto dto)
+        {
+            return new TurnoEntity
+            {
+                FechaFinTurno = dto.FechaFinRegistro,
+                FechaInicioTurno = dto.FechaInicioRegistro,
+                FechaRegistro = dto.FechaRegistro,
+                PersonaId = dto.PersonaId,
+                TipoRegistro = dto.TipoRegistro,
+                TurnoId = dto.TurnoId
+            };
+        }
+
+        public static TurnoDto TurnoToDto(TurnoEntity entity)
+        {
+            return new TurnoDto
+            {
+                TurnoId = entity.TurnoId,
+                TipoRegistro = entity.TipoRegistro,
+                RegistroTurnoId = entity.RegistroTurnoId,
+                FechaFinRegistro = entity.FechaFinTurno,
+                FechaInicioRegistro = entity.FechaInicioTurno,
+                FechaRegistro = entity.FechaRegistro,
+                PersonaId = entity.PersonaId
+            };
+        }
+
     }
 }
