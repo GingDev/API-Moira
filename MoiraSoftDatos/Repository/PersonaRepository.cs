@@ -282,11 +282,11 @@ namespace MoiraSoftDatos.Repository
             };
 
             //Validacion de Usuario Existente
-            if (datos.PersonaId != 0)
+            if (datos.PersonaId == 0)
             {
                 throw new Exception("Se debe indicar el id de la persona.");
             }
-            if (datos.CargoId != 0)
+            if (datos.CargoId == 0)
             {
                 throw new Exception("Se debe indicar el id del cargo.");
             }
