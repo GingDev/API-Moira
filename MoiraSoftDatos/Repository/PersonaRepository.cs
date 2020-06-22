@@ -271,5 +271,64 @@ namespace MoiraSoftDatos.Repository
             }
             return maximoId;
         }
+
+        public async Task<bool> CrearPersonaCargo(PersonaCargoEntity persona, string connection)
+        {
+            PersonaCargoEntity datos = new PersonaCargoEntity
+            {
+                PersonaTrabajoId = await GetMaxIdPersonaTrabajo(connection),
+                PersonaId = persona.PersonaId,
+                CargoId = persona.CargoId
+            };
+
+            //Validacion de Usuario Existente
+            if (datos.PersonaId != 0)
+            {
+                throw new Exception("Se debe indicar el id de la persona.");
+            }
+            if (datos.CargoId != 0)
+            {
+                throw new Exception("Se debe indicar el id del cargo.");
+            }
+
+            using (MySqlConnection con = new MySqlConnection(connection))
+            {
+                using (var cmd = con.CreateCommand())
+                {
+                    cmd.CommandText = $"INSERT INTO bd_moira.persona_trabajo (INT_PK_PERSONA_TRABAJO_ID,INT_FK_INT_PERSONA_ID,INT_FK_CARGO_ID) VALUES ({datos.PersonaTrabajoId},'{datos.PersonaId}','{datos.CargoId}')";
+                    cmd.CommandType = CommandType.Text;
+
+                    await con.OpenAsync();
+                    await cmd.ExecuteNonQueryAsync();
+                    await con.CloseAsync();
+                }
+            }
+
+            return datos.PersonaTrabajoId != 0 ? true : false;
+        }
+
+        private async Task<int> GetMaxIdPersonaTrabajo(string connection)
+        {
+            int maximoId = 0;
+            using (MySqlConnection con = new MySqlConnection(connection))
+            {
+                using (var cmd = con.CreateCommand())
+                {
+                    cmd.CommandText = $"select ifnull(MAX(INT_PK_PERSONA_TRABAJO_ID),0) as Maximo from bd_moira.persona_trabajo";
+                    cmd.CommandType = CommandType.Text;
+
+                    await con.OpenAsync();
+
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            maximoId = Convert.ToInt32(reader["Maximo"].ToString());
+                        }
+                    }
+                }
+            }
+            return maximoId + 1;
+        }
     }
 }

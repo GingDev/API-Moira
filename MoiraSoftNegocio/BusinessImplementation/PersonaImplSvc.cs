@@ -138,5 +138,23 @@ namespace MoiraSoftNegocio.BusinessImplementation
 
             return MensajeRespuesta.CrearMensajeRespuesta(DatosPersona, string.Empty, true);
         }
+
+        public async Task<RespuestaDto<bool>> AsociarPersonaCargo(PersonaCargoDto persona)
+        {
+            bool DatosPersona = true;
+
+            try
+            {
+                DatosPersona = await _personaRepository.CrearPersonaCargo(PersonaMapper.PersonaCargoToEntity(persona), conStr);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
+
+            return MensajeRespuesta.CrearMensajeRespuesta(DatosPersona, string.Empty, true);
+
+        }
     }
 }

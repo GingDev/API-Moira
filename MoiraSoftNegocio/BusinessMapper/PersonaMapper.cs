@@ -115,5 +115,14 @@ namespace MoiraSoftNegocio.BusinessMapper
                 Telefono = entity.Telefono
             };
         }
+
+        public static PersonaCargoEntity PersonaCargoToEntity(PersonaCargoDto dto)
+        {
+            return new PersonaCargoEntity
+            {
+                CargoId = dto.CargoId,
+                PersonaId = dto.PersonaTrabajoId
+            };
+        }
     }
 }

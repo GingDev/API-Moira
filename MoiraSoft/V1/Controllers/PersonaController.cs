@@ -138,6 +138,25 @@ namespace MoiraSoft.V1.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("asocia/")]
+        public async Task<IActionResult> AsociaPersonaCargo(PersonaCargoDto personaCargo)
+        {
+            try
+            {
+                if (personaCargo == null)
+                {
+                    return BadRequest("Solicitud Inválida");
+                }
+                var result = await _persona.AsociarPersonaCargo(personaCargo);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Format("Ha ocurrido un error: {0}", ex.Message));
+            }
+        }
+
         #endregion
 
         #region [Datos de Contacto]
